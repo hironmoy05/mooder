@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 
 import { moodOptions } from '../assets/emojis';
-import { MoodOptionType } from '../Types';
+import { MoodOptionType, MoodPickerProps } from '../Types';
 import { theme } from '../theme';
 import { PressableArea } from './PressableArea';
 
-export const MoodPicker: React.FC = () => {
+export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelect }) => {
     const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
+
+    const handleSelect = useCallback(() => {
+        if (selectedMood) {
+            onSelect(selectedMood);
+            setSelectedMood(undefined);
+        }
+    }, [onSelect, selectedMood]);
 
     return (
         <View style={ styles.container }>
@@ -27,7 +34,7 @@ export const MoodPicker: React.FC = () => {
                 }
 
             </View>
-            <Pressable style={ styles.button }>
+            <Pressable style={ styles.button } onPress={ handleSelect }>
                 <Text style={ styles.buttonText }>Choose</Text>
             </Pressable>
         </View>

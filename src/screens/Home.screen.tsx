@@ -1,15 +1,31 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import AnimatedLottieView from "lottie-react-native";
+import React, { useState, useCallback } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 import { MoodPicker } from '../components/MoodPicker';
+import { MoodOptionType, MoodOptionWithTimestamp } from '../Types';
+import { MoodItemRow } from '../components/MoodItemRow';
 
 export const HomeScreen: React.FC = () => {
+    const [moodList, setMoodList] = useState<MoodOptionWithTimestamp[]>([]);
+
+    const handleSelectMood = useCallback((mood: MoodOptionType) => {
+        setMoodList(current => {
+            return [...current, { mood, timestamp: Date.now() }]
+        })
+    }, [])
+
     return (
         <View style={ styles.container }>
-            {/* <AnimatedLottieView autoPlay loop source={ require('../assets/lottie/97307-grinning-face-emoji.json') } /> */ }
-
-            <MoodPicker />
+            <MoodPicker onSelect={ handleSelectMood } />
+            {
+                moodList.map(item => (
+                    // <View key={ item.timestamp } style={ styles.moodListStyle }>
+                    //     <Text>{ item.mood.emoji }</Text>
+                    //     <Text style={ { marginLeft: 20 } }>{ new Date(item.timestamp).toString() }</Text>
+                    // </View>
+                    <MoodItemRow item={ item } key={ item.timestamp } />
+                ))
+            }
         </View>
     );
 };
@@ -20,5 +36,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 20
     },
+    moodListStyle: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
 });
 
