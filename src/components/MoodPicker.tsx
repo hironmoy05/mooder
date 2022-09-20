@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 
 import { moodOptions } from '../assets/emojis';
 import { MoodOptionType } from '../Types';
@@ -10,24 +10,45 @@ export const MoodPicker: React.FC = () => {
     const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
 
     return (
-        <View style={ styles.moodList }>
-            {
-                moodOptions.map(option => (
-                    <View style={ styles.moodBox }>
-                        <PressableArea key={ option.description } style={ [styles.moodStyle, option.emoji === selectedMood?.emoji && styles.moodSeletedStyle] } onPress={ () => setSelectedMood(option) }>
-                            <Text>
-                                { option.emoji }
-                            </Text>
-                        </PressableArea>
-                        <Text style={ styles.moodText }>{ option.emoji === selectedMood?.emoji && selectedMood.description }</Text>
-                    </View>
-                ))
-            }
+        <View style={ styles.container }>
+            <Text style={ styles.heading }>How are you right now?</Text>
+            <View style={ styles.moodList }>
+                {
+                    moodOptions.map(option => (
+                        <View style={ styles.moodBox }>
+                            <PressableArea key={ option.description } style={ [styles.moodStyle, option.emoji === selectedMood?.emoji && styles.moodSeletedStyle] } onPress={ () => setSelectedMood(option) }>
+                                <Text>
+                                    { option.emoji }
+                                </Text>
+                            </PressableArea>
+                            <Text style={ styles.moodText }>{ option.emoji === selectedMood?.emoji && selectedMood.description }</Text>
+                        </View>
+                    ))
+                }
+
+            </View>
+            <Pressable style={ styles.button }>
+                <Text style={ styles.buttonText }>Choose</Text>
+            </Pressable>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container: {
+        borderWidth: 2,
+        borderColor: theme.colorPurple,
+        margin: 10,
+        borderRadius: 10,
+        padding: 20,
+    },
+    heading: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        letterSpacing: 1,
+        textAlign: 'center',
+        marginBottom: 20,
+    },
     moodList: {
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -56,5 +77,18 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: '800',
         color: theme.colorLavender
-    }
+    },
+    button: {
+        backgroundColor: theme.colorPurple,
+        width: 150,
+        borderRadius: 20,
+        marginTop: 20,
+        alignSelf: 'center',
+        padding: 10,
+    },
+    buttonText: {
+        color: theme.colorWhite,
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
 })
