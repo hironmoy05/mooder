@@ -1,4 +1,4 @@
-export type MoodOptions = {
-    emoji: string;
+export type MoodOptionType = {
+    emoji: Element;
     description: string;
 }
