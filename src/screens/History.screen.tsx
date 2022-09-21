@@ -1,10 +1,18 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+
+import { useAppContext } from '../App.Provider';
+import { MoodItemRow } from '../components/MoodItemRow';
 
 export const HistoryScreen = () => {
+    const appContext = useAppContext();
     return (
         <View style={ styles.container }>
-            <Text>MyComponent</Text>
+            {
+                appContext.moodList.map(item => (
+                    <MoodItemRow item={ item } key={ item.timestamp } />
+                ))
+            }
         </View>
     );
 };
@@ -12,8 +20,6 @@ export const HistoryScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
 });
 

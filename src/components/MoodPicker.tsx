@@ -22,8 +22,8 @@ export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelect }) => {
             <View style={ styles.moodList }>
                 {
                     moodOptions.map(option => (
-                        <View style={ styles.moodBox }>
-                            <PressableArea key={ option.description } style={ [styles.moodStyle, option.emoji === selectedMood?.emoji && styles.moodSeletedStyle] } onPress={ () => setSelectedMood(option) }>
+                        <View style={ styles.moodBox } key={ option.description } >
+                            <PressableArea style={ [styles.moodStyle, option.emoji === selectedMood?.emoji && styles.moodSeletedStyle] } onPress={ () => setSelectedMood(option) }>
                                 <Text>
                                     { option.emoji }
                                 </Text>
